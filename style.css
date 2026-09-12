@@ -433,6 +433,7 @@ h1 {
     gap: 3rem;
     max-width: 700px;
     margin: 0 auto;
+    perspective: 900px;
 }
 
 .polaroid {
@@ -441,6 +442,8 @@ h1 {
     box-shadow: 0 20px 40px rgba(0,0,0,0.06);
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     border: 1px solid var(--border-light);
+    transform-style: preserve-3d;
+    will-change: transform;
 }
 
 .polaroid:nth-child(1) {
@@ -452,7 +455,8 @@ h1 {
 }
 
 .polaroid:hover {
-    transform: rotate(0) translateY(-10px) scale(1.02);
+    transform: rotate(0) translateY(-10px) scale(1.03) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+    transition: transform 0.15s ease-out;
     z-index: 10;
     box-shadow: 0 30px 60px rgba(0,0,0,0.1);
 }
@@ -801,4 +805,72 @@ footer {
     .timeline::before { left: 10px; }
     .timeline-dot { left: 6px; }
     .timeline-item { padding-left: 40px; }
+}
+#dustCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139, 30, 30, 0.08) 0%, rgba(139, 30, 30, 0) 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    will-change: transform;
+}
+
+.cursor-glow.visible {
+    opacity: 1;
+}
+
+.album-art.spinning {
+    animation: vinylSpin 7s linear infinite;
+}
+
+@keyframes vinylSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.confetti-piece {
+    position: fixed;
+    top: var(--start-y, 50%);
+    left: var(--start-x, 50%);
+    font-size: var(--size, 1rem);
+    color: var(--tint, #8b1e1e);
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 9998;
+    animation: confettiFall var(--duration, 2.2s) ease-out forwards;
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(0.6);
+        opacity: 0;
+    }
+    12% {
+        opacity: 0.9;
+        transform: translate(calc(var(--drift-x, 0px) * 0.2), -40px) rotate(45deg) scale(1);
+    }
+    100% {
+        transform: translate(var(--drift-x, 0px), var(--drift-y, 400px)) rotate(var(--spin, 320deg)) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .cursor-glow { display: none; }
 }
