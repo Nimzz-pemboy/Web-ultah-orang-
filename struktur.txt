@@ -3,4 +3,6 @@ project-ultah/
 ├── style.css
 ├── script.js
 ├── music.mp3
-└── cover.jpg
+├── cover.jpg
+├── favicon.ico
+└── og-image.png

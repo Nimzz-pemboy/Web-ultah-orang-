@@ -279,21 +279,6 @@ function burstConfetti(originX, originY, amount) {
     }
 }
 
-document.querySelectorAll('.polaroid').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width - 0.5;
-        const py = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.setProperty('--tilt-x', `${px * 16}deg`);
-        card.style.setProperty('--tilt-y', `${py * -16}deg`);
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.setProperty('--tilt-x', '0deg');
-        card.style.setProperty('--tilt-y', '0deg');
-    });
-});
-
 const originalTitle = document.title;
 let titleTimeout = null;
 
