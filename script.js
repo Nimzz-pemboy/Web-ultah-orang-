@@ -11,10 +11,7 @@ let isPlaying = false;
 function setPlayingState(playState) {
     isPlaying = playState;
     mainPlayIcon.className = playState ? 'fa-solid fa-pause' : 'fa-solid fa-play';
-    albumArt.classList.toggle('spinning', playState);
-    if (playState) {
-        document.querySelector('.art-shadow').style.backgroundImage = `url(${albumArt.src})`;
-    }
+    document.querySelector('.art-shadow').style.backgroundImage = `url(${albumArt.src})`;
 }
 
 startBtn.addEventListener('click', (e) => {
@@ -48,8 +45,8 @@ const fabBtn = document.getElementById('fabBtn');
 const fabMenu = document.getElementById('fabMenu');
 const overlay = document.getElementById('overlay');
 const closePlayerBtn = document.getElementById('closePlayerBtn');
-const progressTrack = document.getElementById('progressTrack');
-const progressFill = document.getElementById('progressFill');
+const progressRange = document.getElementById('progressRange');
+const volumeRange = document.getElementById('volumeRange');
 const currentTimeEl = document.getElementById('currentTime');
 const totalTimeEl = document.getElementById('totalTime');
 
@@ -58,6 +55,10 @@ function formatTime(seconds) {
     const min = Math.floor(seconds / 60);
     const sec = Math.floor(seconds % 60);
     return `${min}:${sec < 10 ? '0' + sec : sec}`;
+}
+
+function updateSliderFill(el, percent) {
+    el.style.background = `linear-gradient(to right, var(--accent) ${percent}%, rgba(0,0,0,0.08) ${percent}%)`;
 }
 
 function closeMenu() {
@@ -100,7 +101,7 @@ function togglePlay() {
 mainPlayBtn.addEventListener('click', togglePlay);
 
 bgMusic.addEventListener('loadedmetadata', () => {
-    totalTimeEl.textContent = formatTime(bgMusic.duration);
+    totalTimeEl.textContent = `-${formatTime(bgMusic.duration)}`;
 });
 
 bgMusic.addEventListener('timeupdate', () => {
@@ -109,27 +110,38 @@ bgMusic.addEventListener('timeupdate', () => {
 
     if (duration) {
         const percent = (current / duration) * 100;
-        progressFill.style.width = `${percent}%`;
+        progressRange.value = percent;
+        updateSliderFill(progressRange, percent);
         currentTimeEl.textContent = formatTime(current);
-        if (totalTimeEl.textContent === "0:00") {
-            totalTimeEl.textContent = formatTime(duration);
-        }
+        totalTimeEl.textContent = `-${formatTime(duration - current)}`;
     }
 });
 
-progressTrack.addEventListener('click', (e) => {
-    const rect = progressTrack.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const width = rect.width;
+progressRange.addEventListener('input', () => {
     const duration = bgMusic.duration;
+    const percent = parseFloat(progressRange.value);
+    updateSliderFill(progressRange, percent);
     if (duration) {
-        bgMusic.currentTime = (clickX / width) * duration;
+        const newTime = (percent / 100) * duration;
+        bgMusic.currentTime = newTime;
+        currentTimeEl.textContent = formatTime(newTime);
+        totalTimeEl.textContent = `-${formatTime(duration - newTime)}`;
     }
+});
+
+bgMusic.volume = 0.8;
+updateSliderFill(volumeRange, 80);
+
+volumeRange.addEventListener('input', () => {
+    const percent = parseFloat(volumeRange.value);
+    bgMusic.volume = percent / 100;
+    updateSliderFill(volumeRange, percent);
 });
 
 bgMusic.addEventListener('ended', () => {
     setPlayingState(false);
-    progressFill.style.width = '0%';
+    progressRange.value = 0;
+    updateSliderFill(progressRange, 0);
     currentTimeEl.textContent = "0:00";
 });
 
