@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Loveanka</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-effects">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <div id="entryScreen" class="entry-screen">
+        <div class="glass-box">
+            <span class="reveal-subtitle">Sebuah Hadiah Kecil</span>
+            <h2 class="playfair-heading">Untuk Loveanka</h2>
+            <button id="startJourney" class="btn-outline">Buka Undangan</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop preload="metadata">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <main id="mainContent" class="hidden">
+        <section class="hero">
+            <div class="hero-content">
+                <span class="subtitle slide-up-anim">Tepat pada hari ini</span>
+                <h1 class="slide-up-anim delay-1">Selamat Ulang Tahun,<br>Loveanka.</h1>
+            </div>
+        </section>
+
+        <section class="letter-section reveal">
+            <div class="envelope-container" id="envelopeContainer">
+                <div class="envelope">
+                    <div class="flap"></div>
+                    <div class="letter-paper">
+                        <div class="letter-content">
+                            <span class="date">31 Agustus 2026</span>
+                            <p class="handwriting">Di hari istimewamu ini, aku hanya ingin mengucapkan terima kasih karena kamu selalu menjadi versi terbaik dari dirimu. Semoga tahun ini membawa lebih banyak kedamaian, kebahagiaan, dan momen-momen indah yang berkesan untukmu.</p>
+                            <span class="signature handwriting">Dengan tulus.</span>
+                        </div>
+                    </div>
+                    <div class="envelope-front"></div>
+                    <div class="wax-seal">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                </div>
+                <p class="envelope-hint">Sentuh surat untuk membuka</p>
+            </div>
+        </section>
+
+        <section class="timeline-section">
+            <h2 class="section-title reveal">Jejak Waktu</h2>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Babak Awal</span>
+                        <h3>Sebuah Perjumpaan</h3>
+                        <p>Momen di mana semuanya dimulai. Sebuah interaksi sederhana yang akhirnya membawa kita pada banyak cerita bermakna hingga hari ini.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Perjalanan Bersama</span>
+                        <h3>Melewati Musim</h3>
+                        <p>Hari demi hari yang dihabiskan bersama, belajar memahami satu sama lain, dan berbagi hal-hal kecil yang membuat semuanya terasa istimewa.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Hari Ini</span>
+                        <h3>Menyambut Lembaran Baru</h3>
+                        <p>Bertambahnya usia bukan hanya tentang angka, tapi tentang kedewasaan, impian yang makin dekat, dan kebahagiaan yang makin nyata.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <h2 class="section-title reveal">Bingkai Memori</h2>
+            <div class="gallery-grid">
+                <div class="polaroid reveal">
+                    <div class="polaroid-img img-placeholder-1">
+                        <i class="fa-solid fa-camera-retro"></i>
+                    </div>
+                    <div class="polaroid-caption">Sebuah Cerita</div>
+                </div>
+                <div class="polaroid reveal delay-1">
+                    <div class="polaroid-img img-placeholder-2">
+                        <i class="fa-solid fa-film"></i>
+                    </div>
+                    <div class="polaroid-caption">Langkah Bersama</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="final-wish reveal">
+            <h2 class="playfair-heading">Untuk Segala Hal Baik di Masa Depan.</h2>
+            <button id="scrollToTop" class="btn-outline">Kembali ke Atas</button>
+        </section>
+
+        <footer>
+            <p>Est. 2026 — Untuk Loveanka</p>
+        </footer>
+    </main>
+
+    <div id="overlay" class="overlay"></div>
+
+    <div class="fab-container">
+        <div id="fabMenu" class="fab-menu">
+            <div class="premium-player">
+                <div class="player-header">
+                    <span class="now-playing-text">Now Playing</span>
+                    <button class="close-player" id="closePlayerBtn"><i class="fa-solid fa-chevron-down"></i></button>
+                </div>
+                
+                <div class="album-art-container">
+                    <img src="cover.jpg" alt="Album Art" class="album-art" id="albumArtImg" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZThlMGRjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEycHgiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Db3ZlciBBcnQ8L3RleHQ+PC9zdmc+'">
+                    <div class="art-shadow"></div>
+                </div>
+
+                <div class="track-info">
+                    <h4 class="track-name">Lagu Spesial</h4>
+                    <p class="track-artist">Album Kenangan</p>
+                </div>
+
+                <div class="progress-container">
+                    <div class="time-row">
+                        <span id="currentTime" class="time-stamp">0:00</span>
+                        <span id="totalTime" class="time-stamp">0:00</span>
+                    </div>
+                    <div class="progress-track" id="progressTrack">
+                        <div class="progress-fill" id="progressFill">
+                            <div class="progress-thumb"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls-row">
+                    <button class="ctrl-btn secondary-ctrl"><i class="fa-solid fa-backward-step"></i></button>
+                    <button class="ctrl-btn main-play-btn" id="mainPlayBtn"><i class="fa-solid fa-play"></i></button>
+                    <button class="ctrl-btn secondary-ctrl"><i class="fa-solid fa-forward-step"></i></button>
+                </div>
+            </div>
+        </div>
+        <button id="fabBtn" class="fab-btn">
+            <i class="fa-solid fa-music"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
